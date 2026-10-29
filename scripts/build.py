@@ -600,60 +600,6 @@ def nours_world(theme):
     return doc.render()
 
 
-# --------------------------------------------------------------------------- the two of us
-
-def partners(theme):
-    c = THEMES[theme]
-    gold = "#D9A54C" if theme == "dark" else "#C08A2E"
-    doc = Doc(theme, W, 300, "Me and Nour",
-              "We started Darb together and work side by side on almost everything. Partners at work, and in life. "
-              "Two threads, Lama's pink and Nour's gold, twisted into one cord. Nour's profile is github.com/b14ckPanther.")
-    doc.add(fabric(doc))
-    doc.add(spine(doc, f"M{SPINE} 0 C {SPINE - 12} 100 {SPINE + 12} 200 {SPINE} 300", .2, 1.4))
-    doc.add(heading(doc, 80, 88, "Me and Nour", 40))
-    y = 156
-    for s_, size, col in (
-        ("We started Darb together, and we work side by side on almost everything.", 20, c["ink"]),
-        ("Partners at work, and in life.", 20, c["soft"]),
-    ):
-        block, y = doc.para(80, y, s_, size, 500 if col == c["soft"] else 400, col, maxw=520, lh=1.6, extra=f'class="fade" {d(.4)}')
-        doc.add(block)
-        y += 6
-    doc.add(doc.text(80, y + 26, "github.com/b14ckPanther", 18, 500, c["thread"], extra=f'class="fade" {d(.7)}'))
-
-    # two threads twisted into one cord: they swap which one is on top at every crossing
-    x0, x1, cy, amp, half = 660, 1088, 150, 22, 53.5
-
-    def pts(sign, a, b):
-        out, x = [], a
-        while x <= b + .01:
-            out.append(f"{x:.1f} {cy + sign * amp * math.sin(math.pi * (x - x0) / half):.1f}")
-            x += 3
-        return "M" + " L".join(out)
-
-    def strand(path, color, t, dur):
-        return (f'<path d="{path}" fill="none" stroke="{c["shadow"]}" stroke-opacity="{c["shadow_op"]}" stroke-width="7" '
-                f'stroke-linecap="round" transform="translate(1.5 2.5)" pathLength="1" class="draw" {d(t, dur)}/>'
-                f'<path d="{path}" fill="none" stroke="{color}" stroke-width="6" stroke-linecap="round" pathLength="1" class="draw" {d(t, dur)}/>'
-                f'<path d="{path}" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.6" stroke-linecap="round" '
-                f'transform="translate(0 -1.5)" pathLength="1" class="draw" {d(t, dur)}/>')
-
-    t0, dur = .6, 2.2
-    doc.add(strand(pts(-1, x0, x1), gold, t0, dur))
-    doc.add(strand(pts(1, x0, x1), c["thread"], t0, dur))
-    n = int((x1 - x0) / half)
-    for i in range(1, n, 2):
-        a, b = x0 + i * half - half * .5, x0 + i * half + half * .5
-        t = t0 + dur * (a - x0) / (x1 - x0)
-        doc.add(f'<g class="fade" {d(t + .15, .2)}>' + strand(pts(-1, a, b), gold, 0, .01) + "</g>")
-    # the ends are tied off with a small knot
-    for (kx, t) in ((x0, t0), (x1, t0 + dur)):
-        doc.add(f'<g class="pop" {d(t)}><circle cx="{kx}" cy="{cy}" r="8" fill="{c["thread"]}"/>'
-                f'<circle cx="{kx}" cy="{cy}" r="8" fill="none" stroke="{gold}" stroke-width="3" stroke-dasharray="6 4"/></g>')
-    doc.add(doc.text(x0, cy + 74, "Her pink, his gold", 16, 400, c["mute"], extra=f'class="fade" {d(t0 + dur)}'))
-    return doc.render()
-
-
 # --------------------------------------------------------------------------- toolbox
 
 TOOLS = [
@@ -761,7 +707,6 @@ def main():
     for theme in THEMES:
         write("hero", theme, hero(theme))
         write("sections/darb", theme, darb(theme))
-        write("sections/me-and-nour", theme, partners(theme))
         write("sections/caramel", theme, caramel(theme))
         write("sections/before-the-pour", theme, tried(theme))
         write("cards/raghad-beauty", theme, raghad(theme))

@@ -15,14 +15,6 @@
 </picture>
 </a>
 
-<a href="https://github.com/b14ckPanther">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/sections/me-and-nour-dark.svg"/>
-  <source media="(prefers-color-scheme: light)" srcset="assets/sections/me-and-nour-light.svg"/>
-  <img src="assets/sections/me-and-nour-light.svg" width="100%" alt="Me and Nour. We started Darb together, and we work side by side on almost everything. Partners at work, and in life. Two threads, my pink and his gold, twisted into one cord. Nour's GitHub: b14ckPanther."/>
-</picture>
-</a>
-
 <a href="https://caramel.darb.co.il">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/sections/caramel-dark.svg"/>
